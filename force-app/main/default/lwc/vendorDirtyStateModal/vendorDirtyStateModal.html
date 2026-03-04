@@ -1,0 +1,33 @@
+<!--
+    dirtyStateModal template — shipped with @lightning-out/lwc-shell.
+
+    This template is entirely generic / config-driven:
+    - Header label, body description, and footer buttons are all bound to
+      the `modalFields` @api property — nothing is hard-coded here.
+    - The concrete values (e.g. "Unsaved Changes", "Discard Changes" button)
+      are defined in InternalHostLwcShell.ts inside the
+      `[DoCloseConfirmation]()` method and passed at open-time.
+    - To change what the modal displays, update the config object in
+      InternalHostLwcShell.ts, NOT this template.
+
+    Customers: copy this file (along with .js and .js-meta.xml) into your
+    SFDX project's lwc/dirtyStateModal/ folder and deploy to your org.
+-->
+<template>
+    <lightning-modal-header label={modalFields.label}></lightning-modal-header>
+    <lightning-modal-body>
+        <p>{modalFields.description}</p>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <template for:each={modalFields.buttons} for:item="button">
+            <lightning-button
+                key={button.buttonKey}
+                label={button.buttonLabel}
+                variant={button.buttonVariant}
+                data-key={button.buttonKey}
+                onclick={handleButtonClick}
+                class="slds-m-right_x-small"
+            ></lightning-button>
+        </template>
+    </lightning-modal-footer>
+</template>

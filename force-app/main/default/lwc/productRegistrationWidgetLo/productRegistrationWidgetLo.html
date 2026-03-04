@@ -1,0 +1,13 @@
+<!--
+    productRegistrationWidgetLo template — LWC Recipe for lwc-shell.
+
+    The `lwc:dom="manual"` directive tells LWC that we will manage this
+    <div> imperatively. In `_createShell()` we call
+    `document.createElement('lwc-shell')` and append it here.
+
+    This pattern is required because <lwc-shell> is a standard custom
+    element (not an LWC), so it cannot be used declaratively in LWC templates.
+-->
+<template>
+    <div class="shell-container" lwc:dom="manual"></div>
+</template>

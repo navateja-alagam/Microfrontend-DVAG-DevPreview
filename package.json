@@ -1,0 +1,31 @@
+{
+    "name": "microfrontend-dvag-devpreview",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Salesforce App - Microfrontend DVAG Dev Preview",
+    "scripts": {
+        "lint": "eslint **/{aura,lwc}/**/*.js",
+        "test": "npm run test:unit",
+        "test:unit": "sfdx-lwc-jest",
+        "test:unit:watch": "sfdx-lwc-jest --watch",
+        "test:unit:debug": "sfdx-lwc-jest --debug",
+        "test:unit:coverage": "sfdx-lwc-jest --coverage",
+        "prettier": "prettier --write \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
+        "prettier:verify": "prettier --check \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
+        "vendor:build": "lwc-shell-vendor-build"
+    },
+    "devDependencies": {
+        "@lightning-out/lwc-shell": "2.2.0-rc.0",
+        "@lwc/eslint-plugin-lwc": "^2.0.0",
+        "@prettier/plugin-xml": "^3.2.1",
+        "@salesforce/eslint-config-lwc": "^3.5.2",
+        "@salesforce/eslint-plugin-aura": "^2.1.0",
+        "@salesforce/eslint-plugin-lightning": "^1.0.0",
+        "@salesforce/sfdx-lwc-jest": "^1.4.1",
+        "eslint": "^8.49.0",
+        "eslint-plugin-import": "^2.28.1",
+        "eslint-plugin-jest": "^27.2.3",
+        "prettier": "^3.0.3",
+        "prettier-plugin-apex": "^2.0.1"
+    }
+}

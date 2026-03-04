@@ -1,0 +1,12 @@
+{
+    "packageDirectories": [
+        {
+            "path": "force-app",
+            "default": true
+        }
+    ],
+    "name": "Microfrontend DVAG DevPreview",
+    "namespace": "",
+    "sfdcLoginUrl": "https://orgfarm-e6880acc33.test1.my.pc-rnd.salesforce.com/",
+    "sourceApiVersion": "59.0"
+}

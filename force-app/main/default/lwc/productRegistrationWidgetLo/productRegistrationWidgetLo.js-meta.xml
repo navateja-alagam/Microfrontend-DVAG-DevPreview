@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    productRegistrationWidgetLo metadata — LWC Recipe for embed-shell.
+
+    isExposed=true so this component can be placed on Lightning pages via
+    App Builder. The targets list controls which page types it is available on.
+-->
+<LightningComponentBundle
+    xmlns="http://soap.sforce.com/2006/04/metadata"
+    fqn="productRegistrationWidget"
+>
+    <apiVersion>64.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightningCommunity__Page</target>
+    </targets>
+</LightningComponentBundle>

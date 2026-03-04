@@ -1,0 +1,8 @@
+**/staticresources/**
+.localdevserver
+.sfdx
+.sf
+.vscode
+
+coverage/
+sample-react-app/
