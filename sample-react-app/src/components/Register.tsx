@@ -12,7 +12,6 @@ function Register({ productNameInput = '', productIdInput = '' }: RegisterProps)
   const [savedSnapshot, setSavedSnapshot] = useState<string>(JSON.stringify({}));
   const [submitted, setSubmitted] = useState(false);
   const [productName, setProductName] = useState(productNameInput);
-  const beforeUnloadHandlerRef = useRef<((e: BeforeUnloadEvent) => void) | null>(null);
   const dataHandlerRef = useRef<((e: any) => void) | null>(null);
 
   // Ref to always hold the latest model value (avoids stale closure issues)
@@ -64,15 +63,13 @@ function Register({ productNameInput = '', productIdInput = '' }: RegisterProps)
     e.preventDefault();
     setSavedSnapshot(JSON.stringify(model));
     setSubmitted(true);
-    bridge.isConnected() && bridge.dispatchEvent(new CustomEvent('mfe:dirty-state-reset'));
-    toggleBeforeUnload(false);
+    bridge.isConnected() && bridge.dispatchEvent(new CustomEvent('trackdirtystate', {detail: { isDirty: false, instanceId: bridge.instanceId, label: 'Product Registration'}}));
   };
 
   const reset = () => {
     setModel({});
-    bridge.isConnected() && bridge.dispatchEvent(new CustomEvent('mfe:dirty-state-reset'));
+    bridge.isConnected() && bridge.dispatchEvent(new CustomEvent('trackdirtystate', {detail: { isDirty: false, instanceId: bridge.instanceId, label: 'Product Registration'}}));
     setSavedSnapshot(JSON.stringify({}));
-    toggleBeforeUnload(false);
   };
 
   const onChange = (field: string, value: any) => {
@@ -80,30 +77,9 @@ function Register({ productNameInput = '', productIdInput = '' }: RegisterProps)
     setModel(updated);
 
     // Side effects must be outside the state updater (React StrictMode double-invokes updater functions)
-    const dirty = JSON.stringify(updated) !== savedSnapshot;
-    if (dirty) {
-      bridge.isConnected() && bridge.dispatchEvent(new CustomEvent('mfe:dirty-state-detected'));
-    } else {
-      bridge.isConnected() && bridge.dispatchEvent(new CustomEvent('mfe:dirty-state-reset'));
-    }
-    toggleBeforeUnload(dirty);
-  };
-
-  const toggleBeforeUnload = (enable: boolean) => {
-    if (enable) {
-      if (!beforeUnloadHandlerRef.current) {
-        const handler = (e: BeforeUnloadEvent) => {
-          e.preventDefault();
-          e.returnValue = '';
-          return '' as any;
-        };
-        beforeUnloadHandlerRef.current = handler;
-        window.addEventListener('beforeunload', handler);
-      }
-    } else if (beforeUnloadHandlerRef.current) {
-      window.removeEventListener('beforeunload', beforeUnloadHandlerRef.current);
-      beforeUnloadHandlerRef.current = null;
-    }
+    const nonEmpty = Object.fromEntries(Object.entries(updated).filter(([_, v]) => v !== '' && v != null));
+    const dirty = JSON.stringify(nonEmpty) !== savedSnapshot;
+    bridge.isConnected() && bridge.dispatchEvent(new CustomEvent('trackdirtystate', {detail: { isDirty: dirty, instanceId: bridge.instanceId, label: 'Product Registration'}}));
   };
 
   const applyIncomingData = (payload: any) => {

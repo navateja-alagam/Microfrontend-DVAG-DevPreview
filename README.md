@@ -20,7 +20,7 @@ The repo contains two main pieces:
 │       ├── dealerLocatorWidgetLo/  # Embeds dealer locator MFE via lwc-shell
 │       ├── productRegistrationWidgetLo/ # Embeds product registration MFE via lwc-shell
 │       ├── vendorDirtyStateModal/  # Unsaved-changes modal (from lwc-shell)
-│       └── vendorLwcShell/         # Vendored lwc-shell custom element
+│       └── vendorLwcShell/         # ⚠ Generated — not in source control (see Setup step 2)
 ├── manifest/                       # Package manifest (package.xml)
 ├── sample-react-app/               # Sample React MFE application
 └── scripts/                        # Apex & SOQL scripts
@@ -45,11 +45,13 @@ The repo contains two main pieces:
 
 2. **Generate vendored LWC components:**
 
-   > **IMPORTANT:** This step is required before deploying. The `vendor:build` script is exposed by the `@lightning-out/lwc-shell` dependency. It generates the vendored `lwc-shell` and `dirtyStateModal` LWC bundles inside `force-app/main/default/lwc/` from that package. These generated components must be deployed to your org for the shell integration to work.
+   > **IMPORTANT:** The `vendorLwcShell` component is **not checked into source control** — it is listed in `.gitignore` because it is a generated artifact. You **must** run the command below after every fresh clone or when upgrading `@lightning-out/lwc-shell`. This generates the `vendorLwcShell` and `vendorDirtyStateModal` LWC bundles inside `force-app/main/default/lwc/` from the `@lightning-out/lwc-shell` package. These generated components must be deployed to your org for the shell integration to work.
 
    ```bash
    npm run vendor:build
    ```
+
+   After running, verify that `force-app/main/default/lwc/vendorLwcShell/` has been created before proceeding to deploy.
 
 3. **Authorize your org:**
 
@@ -74,7 +76,7 @@ cd sample-react-app
 npm install
 ```
 
-> **Note:** The `@lightning-out/bridge` package has a transitive dependency on `@lightning-out/utils`, which is a private/internal package. The `overrides` section in `package.json` replaces it with an empty stub so `npm install` succeeds without access to the private registry.
+> **Note:** The `@lightning-out/bridge` package has a transitive dependency on `utils`, which is a private/internal package. The `overrides` section in `package.json` replaces it with an empty stub so `npm install` succeeds without access to the private registry. This is a temporary workaround and will be fixed in a future release of `@lightning-out/bridge`, at which point the override can be removed.
 
 ### Run with HTTPS (SSL)
 

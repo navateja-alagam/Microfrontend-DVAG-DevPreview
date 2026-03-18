@@ -76,7 +76,7 @@ function DealerLocator() {
     updateMapMarkers(dealers);
     if (isDirty) {
       setIsDirty(false);
-      bridge.isConnected() && bridge.dispatchEvent(new CustomEvent('mfe:dirty-state-reset'));
+      bridge.isConnected() && bridge.dispatchEvent(new CustomEvent('trackdirtystate', {detail: { isDirty: false, instanceId: bridge.instanceId, label: 'Dealer Locator'}}));
     }
   };
 
@@ -141,7 +141,7 @@ function DealerLocator() {
               setQuery(e.target.value);
               if (!isDirty) {
                 setIsDirty(true);
-                bridge.isConnected() && bridge.dispatchEvent(new CustomEvent('mfe:dirty-state-detected'));
+                bridge.isConnected() && bridge.dispatchEvent(new CustomEvent('trackdirtystate', {detail: { isDirty: true, instanceId: bridge.instanceId, label: 'Dealer Locator'}}));
               }
             }}
             onKeyPress={handleKeyPress}
