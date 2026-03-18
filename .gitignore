@@ -44,3 +44,5 @@ $RECYCLE.BIN/
 sample-react-app/build/
 sample-react-app/dist/
 sample-react-app/.cert/
+
+force-app/main/default/lwc/vendorLwcShell/

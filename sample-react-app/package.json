@@ -14,7 +14,7 @@
         "generate-cert": "bash scripts/generate-cert.sh"
     },
     "dependencies": {
-        "@lightning-out/bridge": "2.2.0-rc.0",
+        "@lightning-out/bridge": "2.2.0-rc.2",
         "@types/leaflet": "^1.9.21",
         "leaflet": "^1.9.4",
         "react": "^19.2.0",

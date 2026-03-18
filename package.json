@@ -15,7 +15,7 @@
         "vendor:build": "lwc-shell-vendor-build"
     },
     "devDependencies": {
-        "@lightning-out/lwc-shell": "2.2.0-rc.0",
+        "@lightning-out/lwc-shell": "2.2.0-rc.2",
         "@lwc/eslint-plugin-lwc": "^2.0.0",
         "@prettier/plugin-xml": "^3.2.1",
         "@salesforce/eslint-config-lwc": "^3.5.2",
