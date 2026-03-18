@@ -8,12 +8,9 @@
  * Key integration points:
  * 1. Import 'c/lwcShell' (side-effect) — registers the <lwc-shell>
  *    custom element on the page.
- * 2. Import DirtyStateModal from 'c/dirtyStateModal' — the LWC modal
- *    component copied from the lwc-shell package, used for unsaved-changes
- *    confirmation.
- * 3. Create <lwc-shell> imperatively in `_createShell()` and configure it
- *    with hostComponent, dirtyStateModal, sandbox tokens, and src URL.
- * 4. Clean up in `disconnectedCallback()` to prevent memory leaks.
+ * 2. Create <lwc-shell> imperatively in `_createShell()` and configure it
+ *    with sandbox tokens and src URL.
+ * 3. Clean up in `disconnectedCallback()` to prevent memory leaks.
  *
  * See the lwc-shell package README for the full step-by-step guide.
  */
@@ -24,11 +21,6 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 // This corresponds to the `lwcShell` LWC entity created in Step 2 of the
 // integration guide (copied from dist/index.esm.js).
 import 'c/vendorLwcShell';
-
-// Import the DirtyStateModal LWC component copied from the lwc-shell
-// package's dist/lwc/ folder (Step 3 of the integration guide).
-// Passed to <lwc-shell> so it can show an unsaved-changes dialog.
-import DirtyStateModal from 'c/vendorDirtyStateModal';
 
 const NAME_FIELD = 'Product__c.Name';
 
@@ -127,10 +119,6 @@ export default class ProductRegistrationWidget extends LightningElement {
      * exists or if the container div is not yet in the DOM.
      *
      * Configuration:
-     * - hostComponent: passes `this` so the shell can wire up the
-     *   dirty-state contract (SelfManagedDirtyComponent) on this LWC.
-     * - dirtyStateModal: the DirtyStateModal class so the shell can
-     *   invoke `DirtyStateModal.open()` for unsaved-changes confirmation.
      * - sandbox: additional iframe sandbox tokens (allow-forms, allow-modals).
      * - title: accessible label applied to the container region and iframe.
      * - src: the computed MFE application URL.
@@ -147,7 +135,6 @@ export default class ProductRegistrationWidget extends LightningElement {
         }
 
         const shell = document.createElement('lwc-shell');
-        shell.dirtyStateModal = DirtyStateModal;
         shell.sandbox = 'allow-forms allow-modals';
         shell.title = 'Product Registration';
         shell.src = this.computedSrc;

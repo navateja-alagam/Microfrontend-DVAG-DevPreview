@@ -1,6 +1,5 @@
 import { LightningElement, api } from 'lwc';
 import 'c/vendorLwcShell';
-import DirtyStateModal from 'c/vendorDirtyStateModal';
 
 export default class DealerLocatorWidget extends LightningElement {
     @api baseUrl = 'https://dvag-demo.com:4300';
@@ -40,7 +39,6 @@ export default class DealerLocatorWidget extends LightningElement {
 
         const shell = document.createElement('lwc-shell');
         shell.style.height = '100%';
-        shell.dirtyStateModal = DirtyStateModal;
         shell.sandbox = 'allow-forms allow-modals';
         shell.title = 'Dealer Locator';
         shell.src = this.computedSrc;
